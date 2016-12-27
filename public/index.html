@@ -1,0 +1,97 @@
+<html lang="en">
+
+<head>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="bootstrap.min.css" />
+    <!-- Optional theme -->
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.1/angular.js"></script>
+    <script src="firebase.js"></script>
+    <script src="angularfire.min.js"></script>
+    <script src="underscore-min.js"></script>
+</head>
+
+<body ng-app="Game">
+    <div class="container" ng-controller="GameCtrl">
+    
+        <div class="row">
+            <div class="col-md-8">
+                <div class="row">
+                    <div class="col-md-3 fader" ng-repeat="card in cards" ng-class="{fadeIt: !card.visible}">
+                        <div class="flip-container item" ontouchstart="this.classList.toggle('hover');" ng-class="{flipped: card.flipped}" ng-click="flip(card);">
+                            <div class="flipper">
+                                {{card.name}}
+                                <div class="front" style="background-image: url('files/card_bg.gif')">
+                                    <!-- front content -->
+                                </div>
+                                <div class="back" style="background-image: url('{{card.color}}')">
+                                    <!-- back content -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="logo">
+                    <img src="files/logo.png">
+                </div>
+                <div class="score">
+                    SCORE: {{score}}
+                </div>
+                <div class="restart">
+                    <a href="javascript:void(0);" class="btn btn-primary" ng-click="startGame();">
+                    RESTART
+                </a>
+                    <div>
+                        <h4>Highest Score</h4>
+                       <p>
+                            Username: {{highestScore.username}} <br/>
+                            Email: {{highestScore.email}} <br/>
+                            Score: {{highestScore.score}} <br/>
+                       </p>
+                    </div>
+                    <button id="myBtn" ng-click="openModal()">Open Modal</button>
+                </div>
+            </div>
+        </div>
+        <!-- The Modal -->
+        <div id="myModal" class="modal">
+            <!-- Modal content -->
+            <div class="modal-content">
+                <span class="close" ng-click="closeModal()">&times;</span>
+                <div class="row">
+                    <div class="col-xs-6 col-xs-offset-3">
+                        <div class="form-group">
+                            <input type="text" min="3" max="40" ng-model="username" class="form-control" placeholder="Enter Username" />
+                        </div>
+                        <div class="form-group">
+                            <input type="text" min="3" max="40" ng-model="email" class="form-control" placeholder="Enter Email" />
+                        </div>
+                        <div class="form-group text-right">
+                            <button ng-click="submit()" class="btn btn-primary btn-flat">Submit Score</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+    // Initialize the Firebase SDK
+    var config = {
+        apiKey: 'AIzaSyBwlp3NOUnwqTI9DNACaGYI02HgKp5b61o',
+        authDomain: 'game-9de8e.firebaseapp.com',
+        databaseURL: 'https://game-9de8e.firebaseio.com',
+        storageBucket: 'game-9de8e.appspot.com',
+        messagingSenderId: "1068073260641"
+
+    };
+
+    firebase.initializeApp(config);
+    </script>
+    <script src="app.js"></script>
+</body>
+
+</html>
