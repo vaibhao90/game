@@ -61,6 +61,11 @@ angular.module('Game', ["firebase"])
                 cards.push({ name: i, color: 'files/colour' + (i + 1) + '.gif', flipped: false, visible: true });
             }
             $scope.cards = shuffle(cards);
+            showAllCards();
+             $timeout(function() {
+                    $scope.score -= 1;
+                    closeAllCards();
+                }, 5000);
         }
         $scope.startGame();
         $scope.flip = function(card) {
@@ -117,6 +122,12 @@ angular.module('Game', ["firebase"])
         function closeAllCards() {
             angular.forEach($scope.cards, function(item) {
                 item.flipped = false;
+            })
+        }
+        
+         function showAllCards() {
+            angular.forEach($scope.cards, function(item) {
+                item.flipped = true;
             })
         }
 
